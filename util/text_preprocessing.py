@@ -28,10 +28,12 @@ def raw_to_str(raw_text: str) -> str:
 
 def split_into_works(raw_str: str) -> str:
     # Takes string.txt and splits it based on work
-
+    # maybe this all could be done in one pass, but seems more readable this way
     works = re.split('<<[^>]*>>', raw_str)
+
     # remove extra newline at end for all works and any dramatis personae
     works = [work[:-1] for work in works if 'dramatis personae' not in work.lower()]
+
     # remove extra newline at beginning for all works except first
     for i in range(1, len(works)):
         works[i] = works[i][1:]
