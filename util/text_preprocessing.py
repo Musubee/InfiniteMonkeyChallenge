@@ -53,10 +53,10 @@ def preprocess(raw_filepath: str ='../data/raw.txt') -> None:
     for i in range(len(works)):
         work = works[i]
         trimmed_work = remove_extra_whitespace(work)
-        with open(f'../data/{i}.txt', 'w') as f:
+        with open(f'../data/works/{i}.txt', 'w') as f:
             f.write(trimmed_work)
 
-def get_valid_chars(folder: str ='../data/', num_works: int = 182):
+def get_valid_chars(folder: str ='../data/works/', num_works: int = 182):
     valid_chars = set()
     for i in range(num_works):
         with open(folder + f'{i}.txt') as f:

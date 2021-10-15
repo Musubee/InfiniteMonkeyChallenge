@@ -35,7 +35,6 @@ class TestTrie(unittest.TestCase):
     def test_first_char_shared(self):
         works = ['abc', 'acd']
         trie = create_trie(works)
-        print(trie)
         self.assertTrue('a' in trie)
         new_root = trie['a']
         self.one_word_check(new_root, 'bc', 3)
