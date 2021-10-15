@@ -1,110 +1,66 @@
 import sys
 sys.path.append('../')
 
-from src.trie import TrieNode, insert
+from src.trie import create_trie
 import unittest
-
-# TODO:
-# 1. Add tests for tracking percentage done
 
 class TestTrie(unittest.TestCase):
     # Testing Strategy:
     # 1. word length (0, 1, >1)
     # 2. two words with first (0, 1, >1) characters shared 
 
-    def width_one_branch_check(self, root, letters):
+    def one_word_check(self, root, letters, orig_length):
         # Checks that a path through trie (every node in path only has 1 child) matches given letters
         node = root
-        for letter in letters:
-            self.assertEqual(len(node.children), 1)
-            self.assertEqual(node.children[0].c, letter)
-            node = node.children[0]
+        start_offset = orig_length - len(letters)
+        for i, letter in enumerate(letters, start_offset):
+            self.assertTrue(letter in node)
+            self.assertEqual(node['max_percentage'], round((i/orig_length * 100)))
+            self.assertFalse(node['is_done'])
+            node = node[letter]
 
-        self.assertTrue(node.done)
+        self.assertTrue(node['is_done'])
 
     def test_single_word(self):
-        root = TrieNode('')
-        insert(root, 'abc', 3)
-        self.width_one_branch_check(root, 'abc')
+        works = ['abc']
+        trie = create_trie(works)
+        self.one_word_check(trie, 'abc', 3)
 
     def test_disjoint_words(self):
-        root = TrieNode('')
-        insert(root, 'abc', 3)
-        insert(root, 'bcd', 3)
-        self.assertEqual(len(root.children), 2)
-
-        # Test abc branch
-        node = None
-        for child in root.children:
-            if child.c == 'a':
-                node = child
-                break
-        self.assertTrue(node is not None)
-
-        self.width_one_branch_check(node, 'bc')
-
-        # test bcd branch
-        node = None
-        for child in root.children:
-            if child.c == 'b':
-                node = child
-                break
-        
-        self.assertTrue(node is not None)
-        self.width_one_branch_check(node, 'cd')
+        works = ['abc', 'bcd']
+        trie = create_trie(works)
+        self.one_word_check(trie, 'abc', 3)
+        self.one_word_check(trie, 'bcd', 3)
 
     def test_first_char_shared(self):
-        root = TrieNode('')
-        insert(root, 'abc', 3)
-        insert(root, 'acd', 3)
-
-        self.assertEqual(len(root.children), 1)
-        self.assertEqual(root.children[0].c, 'a')
-
-        node = root.children[0]
-
-        self.assertEqual(len(node.children), 2)
-        
-        # test bc branch
-        child = None
-        for candidate_child in node.children:
-            if candidate_child.c == 'b':
-                child = candidate_child
-                break
-
-        self.assertEqual(len(child.children), 1)
-        self.assertEqual(child.children[0].c, 'c')
-        self.assertTrue(child.children[0].done)
-
-        # test cd branch
-        child = None
-        for candidate_child in node.children:
-            if candidate_child.c == 'c':
-                child = candidate_child
-                break
-
-        self.assertEqual(len(child.children), 1)
-        self.assertEqual(child.children[0].c, 'd')
-        self.assertTrue(child.children[0].done)
+        works = ['abc', 'acd']
+        trie = create_trie(works)
+        print(trie)
+        self.assertTrue('a' in trie)
+        new_root = trie['a']
+        self.one_word_check(new_root, 'bc', 3)
+        self.one_word_check(new_root, 'cd', 3)
 
     def test_first_few_chars_shared(self):
-        root = TrieNode('')
-        insert(root, 'abc', 3)
-        insert(root, 'abd', 3)
+        works = ['abc', 'abd']
+        trie = create_trie(works)
+        self.assertTrue('a' in trie and 'b' in trie['a'])
+        
+        new_root = trie['a']['b']
+        self.one_word_check(new_root, 'c', 3)
+        self.one_word_check(new_root, 'd', 3)
 
-        self.assertEqual(len(root.children), 1)
-        self.assertEqual(root.children[0].c, 'a')
-
-        root = root.children[0]
-
-        self.assertEqual(len(root.children), 1)
-        self.assertEqual(root.children[0].c, 'b')
-
-        root = root.children[0]
-
-        self.assertEqual(len(root.children), 2)
-        children_cs = [child.c for child in root.children]
-        self.assertTrue('c' in children_cs and 'd' in children_cs)
+    def test_overlapping_words(self):
+        works = ['ab', 'abcd']
+        trie = create_trie(works)
+        self.assertTrue(('a' in trie and 'b' in trie['a'] and 
+                        'c' in trie['a']['b'] and 'd' in trie['a']['b']['c']))
+        self.assertEqual(trie['a']['max_percentage'], 50)
+        self.assertEqual(trie['a']['b']['max_percentage'], 100)
+        self.assertTrue(trie['a']['b']['is_done'])
+        self.assertEqual(trie['a']['b']['c']['max_percentage'], 75)
+        self.assertEqual(trie['a']['b']['c']['d']['max_percentage'], 100)
+        self.assertTrue(trie['a']['b']['c']['d']['is_done'])
 
 if __name__ == '__main__':
     unittest.main()

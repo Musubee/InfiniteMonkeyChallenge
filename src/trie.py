@@ -1,42 +1,28 @@
 # Use a Trie to test whether the simulation is matching the works of Shakespeare
-# Implemented recursively, each node will contain its value, children, and the largest percentage match for the current prefix
+# Implemented as a nested dictionary, each key will be a value and point to its children and the largest percentage match for the current prefix
+# Although a recursive implementation is cleaner in my opinion, it runs into issues of maximum recursion depth limit when saving the trie to file
+# Still have to be careful though, as trying to print the full trie will result in a recursion error
 
-# TODO:
-# 1. Add capability for Trie to work at word-level granularity (each node is a word; save this task for later)
-
-# annotation import allows recursive type-hinting, would otherwise throw error at children: List[TrieNode] on line 9
+# annotations allows for easy type hinting (dict, list)
 from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import List
 
-@dataclass
-class TrieNode:
-    c: str
-    max_percentage: int = 0
-    done: bool = False
-    children: List[TrieNode] = field(default_factory=list)
+def insert(trie: dict[str, dict|int|bool], work: str) -> None:
+    node = trie
+    for i, element in enumerate(work):
+        if element not in node:
+            node[element] = {'max_percentage': 0, 'is_done': False}
+        
+        percentage_done = (i + 1) / len(work)
+        percentage_done = round(percentage_done * 100)
+        node[element]['max_percentage'] = max(node[element]['max_percentage'], percentage_done)
+        if i == len(work) - 1:
+            node[element]['is_done'] = True
 
-def insert(root: TrieNode, suffix: str, orig_len: int) -> None:
-    # inserts suffix string into root
-    assert len(suffix) > 0, 'Cannot operate on empty string'
-    assert root is not None, 'Cannot operate on empty Trie'
+        node = node[element]
 
-    child = None
-    letter = suffix[0]
-    for candidate_child in root.children:
-        if candidate_child.c == letter:
-            child = candidate_child
-            break
-
-    if child is None:
-        child = TrieNode(letter)
-        root.children.append(child)
-    
-    percentage_done = int(((orig_len - len(suffix[1:])) / orig_len) * 100) 
-    child.max_percentage = max(child.max_percentage, percentage_done)
-
-    if len(suffix) == 1:
-        child.done = True
-    else:
-        insert(child, suffix[1:], orig_len)
-    
+def create_trie(works: list[str] | list[list[str]]) -> dict[str, dict|int|bool]:
+    # Creates Trie based on works and saves Trie object to file using pickle
+    trie = {'max_percentage': 0, 'is_done': False}
+    for work in works:
+        insert(trie, work)
+    return trie
