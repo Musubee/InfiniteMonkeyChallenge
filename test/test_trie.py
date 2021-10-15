@@ -4,6 +4,9 @@ sys.path.append('../')
 from src.trie import TrieNode, insert
 import unittest
 
+# TODO:
+# 1. Add tests for tracking percentage done
+
 class TestTrie(unittest.TestCase):
     # Testing Strategy:
     # 1. word length (0, 1, >1)

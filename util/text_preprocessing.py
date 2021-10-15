@@ -44,7 +44,7 @@ def remove_extra_whitespace(work: str) -> str:
     work = re.sub(' +', ' ', work)
     return work
 
-def preprocess(raw_filepath='../data/raw.txt') -> None:
+def preprocess(raw_filepath: str ='../data/raw.txt') -> None:
     with open(raw_filepath) as f:
         raw_text_lines = f.readlines()
 
@@ -56,3 +56,14 @@ def preprocess(raw_filepath='../data/raw.txt') -> None:
         with open(f'../data/{i}.txt', 'w') as f:
             f.write(trimmed_work)
 
+def get_valid_chars(folder: str ='../data/', num_works: int = 182):
+    valid_chars = set()
+    for i in range(num_works):
+        with open(folder + f'{i}.txt') as f:
+            work = f.read()
+        work = set(work)
+        for c in work:
+            valid_chars.add(c)
+
+    with open('../data/valid_chars.txt', 'w') as f:
+        f.write(''.join(sorted(valid_chars)))
