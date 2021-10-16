@@ -15,7 +15,7 @@ class TestTrie(unittest.TestCase):
         start_offset = orig_length - len(letters)
         for i, letter in enumerate(letters, start_offset):
             self.assertTrue(letter in node)
-            self.assertEqual(node['max_percentage'], round((i/orig_length * 100)))
+            self.assertEqual(node['max_percentage'], round((i/orig_length * 100), 2))
             self.assertFalse(node['is_done'])
             node = node[letter]
 
@@ -54,11 +54,11 @@ class TestTrie(unittest.TestCase):
         trie = create_trie(works)
         self.assertTrue(('a' in trie and 'b' in trie['a'] and 
                         'c' in trie['a']['b'] and 'd' in trie['a']['b']['c']))
-        self.assertEqual(trie['a']['max_percentage'], 50)
-        self.assertEqual(trie['a']['b']['max_percentage'], 100)
+        self.assertEqual(trie['a']['max_percentage'], 50.00)
+        self.assertEqual(trie['a']['b']['max_percentage'], 100.00)
         self.assertTrue(trie['a']['b']['is_done'])
-        self.assertEqual(trie['a']['b']['c']['max_percentage'], 75)
-        self.assertEqual(trie['a']['b']['c']['d']['max_percentage'], 100)
+        self.assertEqual(trie['a']['b']['c']['max_percentage'], 75.00)
+        self.assertEqual(trie['a']['b']['c']['d']['max_percentage'], 100.00)
         self.assertTrue(trie['a']['b']['c']['d']['is_done'])
 
 if __name__ == '__main__':
