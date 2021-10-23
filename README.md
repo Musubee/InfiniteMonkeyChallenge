@@ -38,3 +38,7 @@ The length of the alphabet is 26, so the probability of success is 1/(26^26), or
 Still not great odds, but a little belief goes a long way!
 
 ## Next Steps
+In its current state, the project is an interactive CLI app that runs the simulation for a number of time steps specified by the user.
+However, I'd ideally like to let the simulation run indefinitely and see how far it could get.
+To do so, I'm going to next work on deploying the simulation as a website that constantly runs the simulation on the back end and displays current progress and best results to visitors.
+I'll have separate instances of the simulation working on a number of challenges with varying difficulty.
