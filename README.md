@@ -25,4 +25,16 @@ The goal of this project is to simulate random typing (at least as well as pytho
 6. Similarly, if you want intermediate results to be printed, include the `-pi` or `--print_intermediate` flag when running step 3.
 
 ## Expected Time to Complete Challenge
+You can find a variety of expected times to recreate Shakespeare with random typing.
+In this project, a random character is chosen from a set of 83 characters, based on the characters found in Project Gutenberg's "The Complete Works of William Shakespeare by William Shakespeare."
+The length of the entire works is 4,880,671 characters.
+If we assume that each character is chosen independently with uniform probability, then the probability of completing the challenge is 1/(83^4,880,671).
+I couldn't even find a calculator capable of calculating that number, which goes to show how absurdly small the chance is of completing this challenge.
+But it'll still be fun to see how far it gets!
+
+I've included an easier challenge of randomly typing out the alphabet.
+We allow the simulation to type any of the 26 lower case characters in the English alphabet.
+The length of the alphabet is 26, so the probability of success is 1/(26^26), or roughly 1.6e-37.
+Still not great odds, but a little belief goes a long way!
+
 ## Next Steps
