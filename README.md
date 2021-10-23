@@ -17,5 +17,12 @@ Furthermore, the monkey will recreate any finite length text. Of course, the odd
 The goal of this project is to simulate random typing (at least as well as python's random library allows us to) and see if our "monkey" gets really really really lucky in recreating Shakespeare's works.
 
 ## Installation Instructions
+1. Install [Python](https://www.python.org/downloads/)
+2. Clone repo onto local machine
+3. Install dependencies using `pip install -r requirements.txt` 
+4. Run `python main.py` in the src folder
+5. If you want to see an easier challenge of typing out the alphabet, include the `-t` or `--test` flag when running the command in step 3.
+6. Similarly, if you want intermediate results to be printed, include the `-pi` or `--print_intermediate` flag when running step 3.
+
 ## Expected Time to Complete Challenge
 ## Next Steps
