@@ -1,15 +1,18 @@
 # InfiniteMonkeyChallenge
 <!-- toc -->
 
- -[Motivation](#motivation)
- -[Installation Instructions](#installation-instructions)
- -[Expected Time to Complete Challenge](#expected-time-to-complete-challenge)
- -[Next Steps](#next-steps)
+ - [Motivation](#motivation)
+ - [Installation Instructions](#installation-instructions)
+ - [Expected Time to Complete Challenge](#expected-time-to-complete-challenge)
+ - [Next Steps](#next-steps)
 
 <!-- tocstop -->
 
 ## Motivation
 How long will it take for random typing to recreate one of Shakespeare's greatest works?
+|![Monkey with a typewriter](https://upload.wikimedia.org/wikipedia/commons/3/3c/Chimpanzee_seated_at_typewriter.jpg)|
+|:-:|
+|From [Wikipedia](https://en.wikipedia.org/wiki/Infinite_monkey/theorem)|
 
 [The Infinite Monkey Theorem](https://en.wikipedia.org/wiki/Infinite_monkey_theorem) is famous for its profound __ on the concept of infinity, despite its ridiculous premise.
 It states that given enough time, a monkey randomly typing characters will at some point recreate the complete works of Shakespeare.
